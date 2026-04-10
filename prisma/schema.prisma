@@ -1,0 +1,147 @@
+// AnestLink — schema.prisma
+// Fase 1: Usuários, perfis e autenticação
+// Prisma ORM + PostgreSQL
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─────────────────────────────────────────
+// ENUMS
+// ─────────────────────────────────────────
+
+enum Role {
+  SURGEON           // cirurgião
+  ANESTHESIOLOGIST  // anestesista
+  ADMIN
+}
+
+enum Plan {
+  FREE
+  PREMIUM
+}
+
+enum VerificationCodeType {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+  PHONE_VERIFICATION
+}
+
+// ─────────────────────────────────────────
+// USERS — tabela central de autenticação
+// ─────────────────────────────────────────
+
+model User {
+  id                String    @id @default(uuid()) @db.Uuid
+  email             String    @unique @db.VarChar(255)
+  phone             String?   @db.VarChar(20)
+  passwordHash      String    @db.VarChar(255)        @map("password_hash")
+  role              Role
+  isActive          Boolean   @default(true)          @map("is_active")
+  emailVerifiedAt   DateTime? @map("email_verified_at")
+  createdAt         DateTime  @default(now())         @map("created_at")
+  updatedAt         DateTime  @updatedAt               @map("updated_at")
+
+  // relações
+  surgeonProfile          SurgeonProfile?
+  anesthesiologistProfile AnesthesiologistProfile?
+  refreshTokens           RefreshToken[]
+  verificationCodes       VerificationCode[]
+
+  @@map("users")
+}
+
+// ─────────────────────────────────────────
+// REFRESH TOKENS — sessões persistentes
+// ─────────────────────────────────────────
+
+model RefreshToken {
+  id         String    @id @default(uuid()) @db.Uuid
+  userId     String    @db.Uuid             @map("user_id")
+  tokenHash  String    @unique @db.VarChar(255) @map("token_hash")
+  expiresAt  DateTime  @map("expires_at")
+  revokedAt  DateTime? @map("revoked_at")
+  createdAt  DateTime  @default(now())      @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([tokenHash])
+  @@map("refresh_tokens")
+}
+
+// ─────────────────────────────────────────
+// VERIFICATION CODES — e-mail, senha, SMS
+// ─────────────────────────────────────────
+
+model VerificationCode {
+  id        String               @id @default(uuid()) @db.Uuid
+  userId    String               @db.Uuid @map("user_id")
+  code      String               @db.VarChar(10)
+  type      VerificationCodeType
+  expiresAt DateTime             @map("expires_at")
+  usedAt    DateTime?            @map("used_at")
+  createdAt DateTime             @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type])
+  @@index([code, type])
+  @@map("verification_codes")
+}
+
+// ─────────────────────────────────────────
+// SURGEON PROFILES
+// ─────────────────────────────────────────
+
+model SurgeonProfile {
+  id             String    @id @default(uuid()) @db.Uuid
+  userId         String    @unique @db.Uuid   @map("user_id")
+  fullName       String    @db.VarChar(255)   @map("full_name")
+  crm            String    @db.VarChar(20)
+  crmState       String    @db.Char(2)        @map("crm_state")
+  bio            String?   @db.Text
+  avatarUrl      String?   @db.VarChar(500)   @map("avatar_url")
+  isCrmVerified  Boolean   @default(false)    @map("is_crm_verified")
+  crmVerifiedAt  DateTime? @map("crm_verified_at")
+  createdAt      DateTime  @default(now())    @map("created_at")
+  updatedAt      DateTime  @updatedAt          @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([crm, crmState])
+  @@map("surgeon_profiles")
+}
+
+// ─────────────────────────────────────────
+// ANESTHESIOLOGIST PROFILES
+// ─────────────────────────────────────────
+
+model AnesthesiologistProfile {
+  id             String    @id @default(uuid()) @db.Uuid
+  userId         String    @unique @db.Uuid   @map("user_id")
+  fullName       String    @db.VarChar(255)   @map("full_name")
+  crm            String    @db.VarChar(20)
+  crmState       String    @db.Char(2)        @map("crm_state")
+  bio            String?   @db.Text
+  avatarUrl      String?   @db.VarChar(500)   @map("avatar_url")
+  plan           Plan      @default(FREE)
+  isCrmVerified  Boolean   @default(false)    @map("is_crm_verified")
+  avgRating      Decimal   @default(0)        @map("avg_rating") @db.Decimal(3, 2)
+  reviewCount    Int       @default(0)        @map("review_count")
+  crmVerifiedAt  DateTime? @map("crm_verified_at")
+  createdAt      DateTime  @default(now())    @map("created_at")
+  updatedAt      DateTime  @updatedAt          @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([plan])
+  @@index([avgRating])
+  @@index([crm, crmState])
+  @@map("anesthesiologist_profiles")
+}
