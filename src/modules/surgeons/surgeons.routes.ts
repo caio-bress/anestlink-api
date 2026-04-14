@@ -2,6 +2,11 @@ import { Router } from 'express'
 import { validate } from '../../shared/middlewares/validate.middleware'
 import { authMiddleware, requireRole } from '../../shared/middlewares/auth.middleware'
 import { createSurgeonProfileSchema, updateSurgeonProfileSchema } from './surgeons.schema'
+import { uploadAvatar, handleUploadError } from '../../shared/middlewares/upload.middleware'
+import {
+  uploadAvatarController,
+  deleteAvatarController,
+} from './surgeons.avatar.controller'
 import {
   createProfileController,
   getProfileController,
@@ -11,10 +16,8 @@ import {
 
 const router = Router()
 
-// todas as rotas exigem autenticação
 router.use(authMiddleware)
 
-// apenas cirurgiões
 router.post(
   '/profile',
   requireRole('SURGEON'),
@@ -35,7 +38,20 @@ router.patch(
   updateProfileController
 )
 
-// qualquer usuário autenticado pode listar cirurgiões
+router.post(
+  '/avatar',
+  requireRole('SURGEON'),
+  uploadAvatar,
+  handleUploadError,
+  uploadAvatarController
+)
+
+router.delete(
+  '/avatar',
+  requireRole('SURGEON'),
+  deleteAvatarController
+)
+
 router.get('/', listSurgeonsController)
 
 export default router

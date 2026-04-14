@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums.ts"
-import type * as Prisma from "../internal/prismaNamespace.ts"
+import type * as $Enums from "../enums"
+import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model SurgeonProfile
@@ -231,6 +231,8 @@ export type SurgeonProfileWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"SurgeonProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SurgeonProfile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  hospitals?: Prisma.SurgeonHospitalListRelationFilter
+  connections?: Prisma.ConnectionListRelationFilter
 }
 
 export type SurgeonProfileOrderByWithRelationInput = {
@@ -246,6 +248,8 @@ export type SurgeonProfileOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  hospitals?: Prisma.SurgeonHospitalOrderByRelationAggregateInput
+  connections?: Prisma.ConnectionOrderByRelationAggregateInput
 }
 
 export type SurgeonProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -264,6 +268,8 @@ export type SurgeonProfileWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"SurgeonProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SurgeonProfile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  hospitals?: Prisma.SurgeonHospitalListRelationFilter
+  connections?: Prisma.ConnectionListRelationFilter
 }, "id" | "userId">
 
 export type SurgeonProfileOrderByWithAggregationInput = {
@@ -312,6 +318,8 @@ export type SurgeonProfileCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutSurgeonProfileInput
+  hospitals?: Prisma.SurgeonHospitalCreateNestedManyWithoutSurgeonInput
+  connections?: Prisma.ConnectionCreateNestedManyWithoutSurgeonInput
 }
 
 export type SurgeonProfileUncheckedCreateInput = {
@@ -326,6 +334,8 @@ export type SurgeonProfileUncheckedCreateInput = {
   crmVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  hospitals?: Prisma.SurgeonHospitalUncheckedCreateNestedManyWithoutSurgeonInput
+  connections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutSurgeonInput
 }
 
 export type SurgeonProfileUpdateInput = {
@@ -340,6 +350,8 @@ export type SurgeonProfileUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutSurgeonProfileNestedInput
+  hospitals?: Prisma.SurgeonHospitalUpdateManyWithoutSurgeonNestedInput
+  connections?: Prisma.ConnectionUpdateManyWithoutSurgeonNestedInput
 }
 
 export type SurgeonProfileUncheckedUpdateInput = {
@@ -354,6 +366,8 @@ export type SurgeonProfileUncheckedUpdateInput = {
   crmVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hospitals?: Prisma.SurgeonHospitalUncheckedUpdateManyWithoutSurgeonNestedInput
+  connections?: Prisma.ConnectionUncheckedUpdateManyWithoutSurgeonNestedInput
 }
 
 export type SurgeonProfileCreateManyInput = {
@@ -444,6 +458,11 @@ export type SurgeonProfileMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type SurgeonProfileScalarRelationFilter = {
+  is?: Prisma.SurgeonProfileWhereInput
+  isNot?: Prisma.SurgeonProfileWhereInput
+}
+
 export type SurgeonProfileCreateNestedOneWithoutUserInput = {
   create?: Prisma.XOR<Prisma.SurgeonProfileCreateWithoutUserInput, Prisma.SurgeonProfileUncheckedCreateWithoutUserInput>
   connectOrCreate?: Prisma.SurgeonProfileCreateOrConnectWithoutUserInput
@@ -476,6 +495,34 @@ export type SurgeonProfileUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SurgeonProfileUpdateToOneWithWhereWithoutUserInput, Prisma.SurgeonProfileUpdateWithoutUserInput>, Prisma.SurgeonProfileUncheckedUpdateWithoutUserInput>
 }
 
+export type SurgeonProfileCreateNestedOneWithoutHospitalsInput = {
+  create?: Prisma.XOR<Prisma.SurgeonProfileCreateWithoutHospitalsInput, Prisma.SurgeonProfileUncheckedCreateWithoutHospitalsInput>
+  connectOrCreate?: Prisma.SurgeonProfileCreateOrConnectWithoutHospitalsInput
+  connect?: Prisma.SurgeonProfileWhereUniqueInput
+}
+
+export type SurgeonProfileUpdateOneRequiredWithoutHospitalsNestedInput = {
+  create?: Prisma.XOR<Prisma.SurgeonProfileCreateWithoutHospitalsInput, Prisma.SurgeonProfileUncheckedCreateWithoutHospitalsInput>
+  connectOrCreate?: Prisma.SurgeonProfileCreateOrConnectWithoutHospitalsInput
+  upsert?: Prisma.SurgeonProfileUpsertWithoutHospitalsInput
+  connect?: Prisma.SurgeonProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SurgeonProfileUpdateToOneWithWhereWithoutHospitalsInput, Prisma.SurgeonProfileUpdateWithoutHospitalsInput>, Prisma.SurgeonProfileUncheckedUpdateWithoutHospitalsInput>
+}
+
+export type SurgeonProfileCreateNestedOneWithoutConnectionsInput = {
+  create?: Prisma.XOR<Prisma.SurgeonProfileCreateWithoutConnectionsInput, Prisma.SurgeonProfileUncheckedCreateWithoutConnectionsInput>
+  connectOrCreate?: Prisma.SurgeonProfileCreateOrConnectWithoutConnectionsInput
+  connect?: Prisma.SurgeonProfileWhereUniqueInput
+}
+
+export type SurgeonProfileUpdateOneRequiredWithoutConnectionsNestedInput = {
+  create?: Prisma.XOR<Prisma.SurgeonProfileCreateWithoutConnectionsInput, Prisma.SurgeonProfileUncheckedCreateWithoutConnectionsInput>
+  connectOrCreate?: Prisma.SurgeonProfileCreateOrConnectWithoutConnectionsInput
+  upsert?: Prisma.SurgeonProfileUpsertWithoutConnectionsInput
+  connect?: Prisma.SurgeonProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SurgeonProfileUpdateToOneWithWhereWithoutConnectionsInput, Prisma.SurgeonProfileUpdateWithoutConnectionsInput>, Prisma.SurgeonProfileUncheckedUpdateWithoutConnectionsInput>
+}
+
 export type SurgeonProfileCreateWithoutUserInput = {
   id?: string
   fullName: string
@@ -487,6 +534,8 @@ export type SurgeonProfileCreateWithoutUserInput = {
   crmVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  hospitals?: Prisma.SurgeonHospitalCreateNestedManyWithoutSurgeonInput
+  connections?: Prisma.ConnectionCreateNestedManyWithoutSurgeonInput
 }
 
 export type SurgeonProfileUncheckedCreateWithoutUserInput = {
@@ -500,6 +549,8 @@ export type SurgeonProfileUncheckedCreateWithoutUserInput = {
   crmVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  hospitals?: Prisma.SurgeonHospitalUncheckedCreateNestedManyWithoutSurgeonInput
+  connections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutSurgeonInput
 }
 
 export type SurgeonProfileCreateOrConnectWithoutUserInput = {
@@ -529,6 +580,8 @@ export type SurgeonProfileUpdateWithoutUserInput = {
   crmVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hospitals?: Prisma.SurgeonHospitalUpdateManyWithoutSurgeonNestedInput
+  connections?: Prisma.ConnectionUpdateManyWithoutSurgeonNestedInput
 }
 
 export type SurgeonProfileUncheckedUpdateWithoutUserInput = {
@@ -542,8 +595,200 @@ export type SurgeonProfileUncheckedUpdateWithoutUserInput = {
   crmVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hospitals?: Prisma.SurgeonHospitalUncheckedUpdateManyWithoutSurgeonNestedInput
+  connections?: Prisma.ConnectionUncheckedUpdateManyWithoutSurgeonNestedInput
 }
 
+export type SurgeonProfileCreateWithoutHospitalsInput = {
+  id?: string
+  fullName: string
+  crm: string
+  crmState: string
+  bio?: string | null
+  avatarUrl?: string | null
+  isCrmVerified?: boolean
+  crmVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutSurgeonProfileInput
+  connections?: Prisma.ConnectionCreateNestedManyWithoutSurgeonInput
+}
+
+export type SurgeonProfileUncheckedCreateWithoutHospitalsInput = {
+  id?: string
+  userId: string
+  fullName: string
+  crm: string
+  crmState: string
+  bio?: string | null
+  avatarUrl?: string | null
+  isCrmVerified?: boolean
+  crmVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  connections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutSurgeonInput
+}
+
+export type SurgeonProfileCreateOrConnectWithoutHospitalsInput = {
+  where: Prisma.SurgeonProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.SurgeonProfileCreateWithoutHospitalsInput, Prisma.SurgeonProfileUncheckedCreateWithoutHospitalsInput>
+}
+
+export type SurgeonProfileUpsertWithoutHospitalsInput = {
+  update: Prisma.XOR<Prisma.SurgeonProfileUpdateWithoutHospitalsInput, Prisma.SurgeonProfileUncheckedUpdateWithoutHospitalsInput>
+  create: Prisma.XOR<Prisma.SurgeonProfileCreateWithoutHospitalsInput, Prisma.SurgeonProfileUncheckedCreateWithoutHospitalsInput>
+  where?: Prisma.SurgeonProfileWhereInput
+}
+
+export type SurgeonProfileUpdateToOneWithWhereWithoutHospitalsInput = {
+  where?: Prisma.SurgeonProfileWhereInput
+  data: Prisma.XOR<Prisma.SurgeonProfileUpdateWithoutHospitalsInput, Prisma.SurgeonProfileUncheckedUpdateWithoutHospitalsInput>
+}
+
+export type SurgeonProfileUpdateWithoutHospitalsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  crmState?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCrmVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  crmVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutSurgeonProfileNestedInput
+  connections?: Prisma.ConnectionUpdateManyWithoutSurgeonNestedInput
+}
+
+export type SurgeonProfileUncheckedUpdateWithoutHospitalsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  crmState?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCrmVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  crmVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  connections?: Prisma.ConnectionUncheckedUpdateManyWithoutSurgeonNestedInput
+}
+
+export type SurgeonProfileCreateWithoutConnectionsInput = {
+  id?: string
+  fullName: string
+  crm: string
+  crmState: string
+  bio?: string | null
+  avatarUrl?: string | null
+  isCrmVerified?: boolean
+  crmVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutSurgeonProfileInput
+  hospitals?: Prisma.SurgeonHospitalCreateNestedManyWithoutSurgeonInput
+}
+
+export type SurgeonProfileUncheckedCreateWithoutConnectionsInput = {
+  id?: string
+  userId: string
+  fullName: string
+  crm: string
+  crmState: string
+  bio?: string | null
+  avatarUrl?: string | null
+  isCrmVerified?: boolean
+  crmVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  hospitals?: Prisma.SurgeonHospitalUncheckedCreateNestedManyWithoutSurgeonInput
+}
+
+export type SurgeonProfileCreateOrConnectWithoutConnectionsInput = {
+  where: Prisma.SurgeonProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.SurgeonProfileCreateWithoutConnectionsInput, Prisma.SurgeonProfileUncheckedCreateWithoutConnectionsInput>
+}
+
+export type SurgeonProfileUpsertWithoutConnectionsInput = {
+  update: Prisma.XOR<Prisma.SurgeonProfileUpdateWithoutConnectionsInput, Prisma.SurgeonProfileUncheckedUpdateWithoutConnectionsInput>
+  create: Prisma.XOR<Prisma.SurgeonProfileCreateWithoutConnectionsInput, Prisma.SurgeonProfileUncheckedCreateWithoutConnectionsInput>
+  where?: Prisma.SurgeonProfileWhereInput
+}
+
+export type SurgeonProfileUpdateToOneWithWhereWithoutConnectionsInput = {
+  where?: Prisma.SurgeonProfileWhereInput
+  data: Prisma.XOR<Prisma.SurgeonProfileUpdateWithoutConnectionsInput, Prisma.SurgeonProfileUncheckedUpdateWithoutConnectionsInput>
+}
+
+export type SurgeonProfileUpdateWithoutConnectionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  crmState?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCrmVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  crmVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutSurgeonProfileNestedInput
+  hospitals?: Prisma.SurgeonHospitalUpdateManyWithoutSurgeonNestedInput
+}
+
+export type SurgeonProfileUncheckedUpdateWithoutConnectionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  crmState?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCrmVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  crmVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hospitals?: Prisma.SurgeonHospitalUncheckedUpdateManyWithoutSurgeonNestedInput
+}
+
+
+/**
+ * Count Type SurgeonProfileCountOutputType
+ */
+
+export type SurgeonProfileCountOutputType = {
+  hospitals: number
+  connections: number
+}
+
+export type SurgeonProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  hospitals?: boolean | SurgeonProfileCountOutputTypeCountHospitalsArgs
+  connections?: boolean | SurgeonProfileCountOutputTypeCountConnectionsArgs
+}
+
+/**
+ * SurgeonProfileCountOutputType without action
+ */
+export type SurgeonProfileCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SurgeonProfileCountOutputType
+   */
+  select?: Prisma.SurgeonProfileCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * SurgeonProfileCountOutputType without action
+ */
+export type SurgeonProfileCountOutputTypeCountHospitalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SurgeonHospitalWhereInput
+}
+
+/**
+ * SurgeonProfileCountOutputType without action
+ */
+export type SurgeonProfileCountOutputTypeCountConnectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ConnectionWhereInput
+}
 
 
 export type SurgeonProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -559,6 +804,9 @@ export type SurgeonProfileSelect<ExtArgs extends runtime.Types.Extensions.Intern
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  hospitals?: boolean | Prisma.SurgeonProfile$hospitalsArgs<ExtArgs>
+  connections?: boolean | Prisma.SurgeonProfile$connectionsArgs<ExtArgs>
+  _count?: boolean | Prisma.SurgeonProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["surgeonProfile"]>
 
 export type SurgeonProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -608,6 +856,9 @@ export type SurgeonProfileSelectScalar = {
 export type SurgeonProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "fullName" | "crm" | "crmState" | "bio" | "avatarUrl" | "isCrmVerified" | "crmVerifiedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["surgeonProfile"]>
 export type SurgeonProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  hospitals?: boolean | Prisma.SurgeonProfile$hospitalsArgs<ExtArgs>
+  connections?: boolean | Prisma.SurgeonProfile$connectionsArgs<ExtArgs>
+  _count?: boolean | Prisma.SurgeonProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SurgeonProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -620,6 +871,8 @@ export type $SurgeonProfilePayload<ExtArgs extends runtime.Types.Extensions.Inte
   name: "SurgeonProfile"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    hospitals: Prisma.$SurgeonHospitalPayload<ExtArgs>[]
+    connections: Prisma.$ConnectionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1028,6 +1281,8 @@ readonly fields: SurgeonProfileFieldRefs;
 export interface Prisma__SurgeonProfileClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  hospitals<T extends Prisma.SurgeonProfile$hospitalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SurgeonProfile$hospitalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SurgeonHospitalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  connections<T extends Prisma.SurgeonProfile$connectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SurgeonProfile$connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1466,6 +1721,54 @@ export type SurgeonProfileDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many SurgeonProfiles to delete.
    */
   limit?: number
+}
+
+/**
+ * SurgeonProfile.hospitals
+ */
+export type SurgeonProfile$hospitalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SurgeonHospital
+   */
+  select?: Prisma.SurgeonHospitalSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SurgeonHospital
+   */
+  omit?: Prisma.SurgeonHospitalOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SurgeonHospitalInclude<ExtArgs> | null
+  where?: Prisma.SurgeonHospitalWhereInput
+  orderBy?: Prisma.SurgeonHospitalOrderByWithRelationInput | Prisma.SurgeonHospitalOrderByWithRelationInput[]
+  cursor?: Prisma.SurgeonHospitalWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SurgeonHospitalScalarFieldEnum | Prisma.SurgeonHospitalScalarFieldEnum[]
+}
+
+/**
+ * SurgeonProfile.connections
+ */
+export type SurgeonProfile$connectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Connection
+   */
+  select?: Prisma.ConnectionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Connection
+   */
+  omit?: Prisma.ConnectionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConnectionInclude<ExtArgs> | null
+  where?: Prisma.ConnectionWhereInput
+  orderBy?: Prisma.ConnectionOrderByWithRelationInput | Prisma.ConnectionOrderByWithRelationInput[]
+  cursor?: Prisma.ConnectionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ConnectionScalarFieldEnum | Prisma.ConnectionScalarFieldEnum[]
 }
 
 /**

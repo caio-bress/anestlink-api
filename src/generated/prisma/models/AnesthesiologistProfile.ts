@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums.ts"
-import type * as Prisma from "../internal/prismaNamespace.ts"
+import type * as $Enums from "../enums"
+import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model AnesthesiologistProfile
@@ -293,6 +293,10 @@ export type AnesthesiologistProfileWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"AnesthesiologistProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AnesthesiologistProfile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  hospitals?: Prisma.AnesthesiologistHospitalListRelationFilter
+  specialties?: Prisma.AnesthesiologistSpecialtyListRelationFilter
+  availability?: Prisma.XOR<Prisma.AvailabilityNullableScalarRelationFilter, Prisma.AvailabilityWhereInput> | null
+  connections?: Prisma.ConnectionListRelationFilter
 }
 
 export type AnesthesiologistProfileOrderByWithRelationInput = {
@@ -311,6 +315,10 @@ export type AnesthesiologistProfileOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  hospitals?: Prisma.AnesthesiologistHospitalOrderByRelationAggregateInput
+  specialties?: Prisma.AnesthesiologistSpecialtyOrderByRelationAggregateInput
+  availability?: Prisma.AvailabilityOrderByWithRelationInput
+  connections?: Prisma.ConnectionOrderByRelationAggregateInput
 }
 
 export type AnesthesiologistProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -332,6 +340,10 @@ export type AnesthesiologistProfileWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"AnesthesiologistProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AnesthesiologistProfile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  hospitals?: Prisma.AnesthesiologistHospitalListRelationFilter
+  specialties?: Prisma.AnesthesiologistSpecialtyListRelationFilter
+  availability?: Prisma.XOR<Prisma.AvailabilityNullableScalarRelationFilter, Prisma.AvailabilityWhereInput> | null
+  connections?: Prisma.ConnectionListRelationFilter
 }, "id" | "userId">
 
 export type AnesthesiologistProfileOrderByWithAggregationInput = {
@@ -391,6 +403,10 @@ export type AnesthesiologistProfileCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutAnesthesiologistProfileInput
+  hospitals?: Prisma.AnesthesiologistHospitalCreateNestedManyWithoutAnesthesiologistInput
+  specialties?: Prisma.AnesthesiologistSpecialtyCreateNestedManyWithoutAnesthesiologistInput
+  availability?: Prisma.AvailabilityCreateNestedOneWithoutAnesthesiologistInput
+  connections?: Prisma.ConnectionCreateNestedManyWithoutAnesthesiologistInput
 }
 
 export type AnesthesiologistProfileUncheckedCreateInput = {
@@ -408,6 +424,10 @@ export type AnesthesiologistProfileUncheckedCreateInput = {
   crmVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  hospitals?: Prisma.AnesthesiologistHospitalUncheckedCreateNestedManyWithoutAnesthesiologistInput
+  specialties?: Prisma.AnesthesiologistSpecialtyUncheckedCreateNestedManyWithoutAnesthesiologistInput
+  availability?: Prisma.AvailabilityUncheckedCreateNestedOneWithoutAnesthesiologistInput
+  connections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutAnesthesiologistInput
 }
 
 export type AnesthesiologistProfileUpdateInput = {
@@ -425,6 +445,10 @@ export type AnesthesiologistProfileUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutAnesthesiologistProfileNestedInput
+  hospitals?: Prisma.AnesthesiologistHospitalUpdateManyWithoutAnesthesiologistNestedInput
+  specialties?: Prisma.AnesthesiologistSpecialtyUpdateManyWithoutAnesthesiologistNestedInput
+  availability?: Prisma.AvailabilityUpdateOneWithoutAnesthesiologistNestedInput
+  connections?: Prisma.ConnectionUpdateManyWithoutAnesthesiologistNestedInput
 }
 
 export type AnesthesiologistProfileUncheckedUpdateInput = {
@@ -442,6 +466,10 @@ export type AnesthesiologistProfileUncheckedUpdateInput = {
   crmVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hospitals?: Prisma.AnesthesiologistHospitalUncheckedUpdateManyWithoutAnesthesiologistNestedInput
+  specialties?: Prisma.AnesthesiologistSpecialtyUncheckedUpdateManyWithoutAnesthesiologistNestedInput
+  availability?: Prisma.AvailabilityUncheckedUpdateOneWithoutAnesthesiologistNestedInput
+  connections?: Prisma.ConnectionUncheckedUpdateManyWithoutAnesthesiologistNestedInput
 }
 
 export type AnesthesiologistProfileCreateManyInput = {
@@ -560,6 +588,11 @@ export type AnesthesiologistProfileSumOrderByAggregateInput = {
   reviewCount?: Prisma.SortOrder
 }
 
+export type AnesthesiologistProfileScalarRelationFilter = {
+  is?: Prisma.AnesthesiologistProfileWhereInput
+  isNot?: Prisma.AnesthesiologistProfileWhereInput
+}
+
 export type AnesthesiologistProfileCreateNestedOneWithoutUserInput = {
   create?: Prisma.XOR<Prisma.AnesthesiologistProfileCreateWithoutUserInput, Prisma.AnesthesiologistProfileUncheckedCreateWithoutUserInput>
   connectOrCreate?: Prisma.AnesthesiologistProfileCreateOrConnectWithoutUserInput
@@ -612,6 +645,62 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type AnesthesiologistProfileCreateNestedOneWithoutSpecialtiesInput = {
+  create?: Prisma.XOR<Prisma.AnesthesiologistProfileCreateWithoutSpecialtiesInput, Prisma.AnesthesiologistProfileUncheckedCreateWithoutSpecialtiesInput>
+  connectOrCreate?: Prisma.AnesthesiologistProfileCreateOrConnectWithoutSpecialtiesInput
+  connect?: Prisma.AnesthesiologistProfileWhereUniqueInput
+}
+
+export type AnesthesiologistProfileUpdateOneRequiredWithoutSpecialtiesNestedInput = {
+  create?: Prisma.XOR<Prisma.AnesthesiologistProfileCreateWithoutSpecialtiesInput, Prisma.AnesthesiologistProfileUncheckedCreateWithoutSpecialtiesInput>
+  connectOrCreate?: Prisma.AnesthesiologistProfileCreateOrConnectWithoutSpecialtiesInput
+  upsert?: Prisma.AnesthesiologistProfileUpsertWithoutSpecialtiesInput
+  connect?: Prisma.AnesthesiologistProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AnesthesiologistProfileUpdateToOneWithWhereWithoutSpecialtiesInput, Prisma.AnesthesiologistProfileUpdateWithoutSpecialtiesInput>, Prisma.AnesthesiologistProfileUncheckedUpdateWithoutSpecialtiesInput>
+}
+
+export type AnesthesiologistProfileCreateNestedOneWithoutHospitalsInput = {
+  create?: Prisma.XOR<Prisma.AnesthesiologistProfileCreateWithoutHospitalsInput, Prisma.AnesthesiologistProfileUncheckedCreateWithoutHospitalsInput>
+  connectOrCreate?: Prisma.AnesthesiologistProfileCreateOrConnectWithoutHospitalsInput
+  connect?: Prisma.AnesthesiologistProfileWhereUniqueInput
+}
+
+export type AnesthesiologistProfileUpdateOneRequiredWithoutHospitalsNestedInput = {
+  create?: Prisma.XOR<Prisma.AnesthesiologistProfileCreateWithoutHospitalsInput, Prisma.AnesthesiologistProfileUncheckedCreateWithoutHospitalsInput>
+  connectOrCreate?: Prisma.AnesthesiologistProfileCreateOrConnectWithoutHospitalsInput
+  upsert?: Prisma.AnesthesiologistProfileUpsertWithoutHospitalsInput
+  connect?: Prisma.AnesthesiologistProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AnesthesiologistProfileUpdateToOneWithWhereWithoutHospitalsInput, Prisma.AnesthesiologistProfileUpdateWithoutHospitalsInput>, Prisma.AnesthesiologistProfileUncheckedUpdateWithoutHospitalsInput>
+}
+
+export type AnesthesiologistProfileCreateNestedOneWithoutAvailabilityInput = {
+  create?: Prisma.XOR<Prisma.AnesthesiologistProfileCreateWithoutAvailabilityInput, Prisma.AnesthesiologistProfileUncheckedCreateWithoutAvailabilityInput>
+  connectOrCreate?: Prisma.AnesthesiologistProfileCreateOrConnectWithoutAvailabilityInput
+  connect?: Prisma.AnesthesiologistProfileWhereUniqueInput
+}
+
+export type AnesthesiologistProfileUpdateOneRequiredWithoutAvailabilityNestedInput = {
+  create?: Prisma.XOR<Prisma.AnesthesiologistProfileCreateWithoutAvailabilityInput, Prisma.AnesthesiologistProfileUncheckedCreateWithoutAvailabilityInput>
+  connectOrCreate?: Prisma.AnesthesiologistProfileCreateOrConnectWithoutAvailabilityInput
+  upsert?: Prisma.AnesthesiologistProfileUpsertWithoutAvailabilityInput
+  connect?: Prisma.AnesthesiologistProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AnesthesiologistProfileUpdateToOneWithWhereWithoutAvailabilityInput, Prisma.AnesthesiologistProfileUpdateWithoutAvailabilityInput>, Prisma.AnesthesiologistProfileUncheckedUpdateWithoutAvailabilityInput>
+}
+
+export type AnesthesiologistProfileCreateNestedOneWithoutConnectionsInput = {
+  create?: Prisma.XOR<Prisma.AnesthesiologistProfileCreateWithoutConnectionsInput, Prisma.AnesthesiologistProfileUncheckedCreateWithoutConnectionsInput>
+  connectOrCreate?: Prisma.AnesthesiologistProfileCreateOrConnectWithoutConnectionsInput
+  connect?: Prisma.AnesthesiologistProfileWhereUniqueInput
+}
+
+export type AnesthesiologistProfileUpdateOneRequiredWithoutConnectionsNestedInput = {
+  create?: Prisma.XOR<Prisma.AnesthesiologistProfileCreateWithoutConnectionsInput, Prisma.AnesthesiologistProfileUncheckedCreateWithoutConnectionsInput>
+  connectOrCreate?: Prisma.AnesthesiologistProfileCreateOrConnectWithoutConnectionsInput
+  upsert?: Prisma.AnesthesiologistProfileUpsertWithoutConnectionsInput
+  connect?: Prisma.AnesthesiologistProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AnesthesiologistProfileUpdateToOneWithWhereWithoutConnectionsInput, Prisma.AnesthesiologistProfileUpdateWithoutConnectionsInput>, Prisma.AnesthesiologistProfileUncheckedUpdateWithoutConnectionsInput>
+}
+
 export type AnesthesiologistProfileCreateWithoutUserInput = {
   id?: string
   fullName: string
@@ -626,6 +715,10 @@ export type AnesthesiologistProfileCreateWithoutUserInput = {
   crmVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  hospitals?: Prisma.AnesthesiologistHospitalCreateNestedManyWithoutAnesthesiologistInput
+  specialties?: Prisma.AnesthesiologistSpecialtyCreateNestedManyWithoutAnesthesiologistInput
+  availability?: Prisma.AvailabilityCreateNestedOneWithoutAnesthesiologistInput
+  connections?: Prisma.ConnectionCreateNestedManyWithoutAnesthesiologistInput
 }
 
 export type AnesthesiologistProfileUncheckedCreateWithoutUserInput = {
@@ -642,6 +735,10 @@ export type AnesthesiologistProfileUncheckedCreateWithoutUserInput = {
   crmVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  hospitals?: Prisma.AnesthesiologistHospitalUncheckedCreateNestedManyWithoutAnesthesiologistInput
+  specialties?: Prisma.AnesthesiologistSpecialtyUncheckedCreateNestedManyWithoutAnesthesiologistInput
+  availability?: Prisma.AvailabilityUncheckedCreateNestedOneWithoutAnesthesiologistInput
+  connections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutAnesthesiologistInput
 }
 
 export type AnesthesiologistProfileCreateOrConnectWithoutUserInput = {
@@ -674,6 +771,10 @@ export type AnesthesiologistProfileUpdateWithoutUserInput = {
   crmVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hospitals?: Prisma.AnesthesiologistHospitalUpdateManyWithoutAnesthesiologistNestedInput
+  specialties?: Prisma.AnesthesiologistSpecialtyUpdateManyWithoutAnesthesiologistNestedInput
+  availability?: Prisma.AvailabilityUpdateOneWithoutAnesthesiologistNestedInput
+  connections?: Prisma.ConnectionUpdateManyWithoutAnesthesiologistNestedInput
 }
 
 export type AnesthesiologistProfileUncheckedUpdateWithoutUserInput = {
@@ -690,8 +791,443 @@ export type AnesthesiologistProfileUncheckedUpdateWithoutUserInput = {
   crmVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hospitals?: Prisma.AnesthesiologistHospitalUncheckedUpdateManyWithoutAnesthesiologistNestedInput
+  specialties?: Prisma.AnesthesiologistSpecialtyUncheckedUpdateManyWithoutAnesthesiologistNestedInput
+  availability?: Prisma.AvailabilityUncheckedUpdateOneWithoutAnesthesiologistNestedInput
+  connections?: Prisma.ConnectionUncheckedUpdateManyWithoutAnesthesiologistNestedInput
 }
 
+export type AnesthesiologistProfileCreateWithoutSpecialtiesInput = {
+  id?: string
+  fullName: string
+  crm: string
+  crmState: string
+  bio?: string | null
+  avatarUrl?: string | null
+  plan?: $Enums.Plan
+  isCrmVerified?: boolean
+  avgRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  reviewCount?: number
+  crmVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutAnesthesiologistProfileInput
+  hospitals?: Prisma.AnesthesiologistHospitalCreateNestedManyWithoutAnesthesiologistInput
+  availability?: Prisma.AvailabilityCreateNestedOneWithoutAnesthesiologistInput
+  connections?: Prisma.ConnectionCreateNestedManyWithoutAnesthesiologistInput
+}
+
+export type AnesthesiologistProfileUncheckedCreateWithoutSpecialtiesInput = {
+  id?: string
+  userId: string
+  fullName: string
+  crm: string
+  crmState: string
+  bio?: string | null
+  avatarUrl?: string | null
+  plan?: $Enums.Plan
+  isCrmVerified?: boolean
+  avgRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  reviewCount?: number
+  crmVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  hospitals?: Prisma.AnesthesiologistHospitalUncheckedCreateNestedManyWithoutAnesthesiologistInput
+  availability?: Prisma.AvailabilityUncheckedCreateNestedOneWithoutAnesthesiologistInput
+  connections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutAnesthesiologistInput
+}
+
+export type AnesthesiologistProfileCreateOrConnectWithoutSpecialtiesInput = {
+  where: Prisma.AnesthesiologistProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.AnesthesiologistProfileCreateWithoutSpecialtiesInput, Prisma.AnesthesiologistProfileUncheckedCreateWithoutSpecialtiesInput>
+}
+
+export type AnesthesiologistProfileUpsertWithoutSpecialtiesInput = {
+  update: Prisma.XOR<Prisma.AnesthesiologistProfileUpdateWithoutSpecialtiesInput, Prisma.AnesthesiologistProfileUncheckedUpdateWithoutSpecialtiesInput>
+  create: Prisma.XOR<Prisma.AnesthesiologistProfileCreateWithoutSpecialtiesInput, Prisma.AnesthesiologistProfileUncheckedCreateWithoutSpecialtiesInput>
+  where?: Prisma.AnesthesiologistProfileWhereInput
+}
+
+export type AnesthesiologistProfileUpdateToOneWithWhereWithoutSpecialtiesInput = {
+  where?: Prisma.AnesthesiologistProfileWhereInput
+  data: Prisma.XOR<Prisma.AnesthesiologistProfileUpdateWithoutSpecialtiesInput, Prisma.AnesthesiologistProfileUncheckedUpdateWithoutSpecialtiesInput>
+}
+
+export type AnesthesiologistProfileUpdateWithoutSpecialtiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  crmState?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  isCrmVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reviewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  crmVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutAnesthesiologistProfileNestedInput
+  hospitals?: Prisma.AnesthesiologistHospitalUpdateManyWithoutAnesthesiologistNestedInput
+  availability?: Prisma.AvailabilityUpdateOneWithoutAnesthesiologistNestedInput
+  connections?: Prisma.ConnectionUpdateManyWithoutAnesthesiologistNestedInput
+}
+
+export type AnesthesiologistProfileUncheckedUpdateWithoutSpecialtiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  crmState?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  isCrmVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reviewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  crmVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hospitals?: Prisma.AnesthesiologistHospitalUncheckedUpdateManyWithoutAnesthesiologistNestedInput
+  availability?: Prisma.AvailabilityUncheckedUpdateOneWithoutAnesthesiologistNestedInput
+  connections?: Prisma.ConnectionUncheckedUpdateManyWithoutAnesthesiologistNestedInput
+}
+
+export type AnesthesiologistProfileCreateWithoutHospitalsInput = {
+  id?: string
+  fullName: string
+  crm: string
+  crmState: string
+  bio?: string | null
+  avatarUrl?: string | null
+  plan?: $Enums.Plan
+  isCrmVerified?: boolean
+  avgRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  reviewCount?: number
+  crmVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutAnesthesiologistProfileInput
+  specialties?: Prisma.AnesthesiologistSpecialtyCreateNestedManyWithoutAnesthesiologistInput
+  availability?: Prisma.AvailabilityCreateNestedOneWithoutAnesthesiologistInput
+  connections?: Prisma.ConnectionCreateNestedManyWithoutAnesthesiologistInput
+}
+
+export type AnesthesiologistProfileUncheckedCreateWithoutHospitalsInput = {
+  id?: string
+  userId: string
+  fullName: string
+  crm: string
+  crmState: string
+  bio?: string | null
+  avatarUrl?: string | null
+  plan?: $Enums.Plan
+  isCrmVerified?: boolean
+  avgRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  reviewCount?: number
+  crmVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  specialties?: Prisma.AnesthesiologistSpecialtyUncheckedCreateNestedManyWithoutAnesthesiologistInput
+  availability?: Prisma.AvailabilityUncheckedCreateNestedOneWithoutAnesthesiologistInput
+  connections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutAnesthesiologistInput
+}
+
+export type AnesthesiologistProfileCreateOrConnectWithoutHospitalsInput = {
+  where: Prisma.AnesthesiologistProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.AnesthesiologistProfileCreateWithoutHospitalsInput, Prisma.AnesthesiologistProfileUncheckedCreateWithoutHospitalsInput>
+}
+
+export type AnesthesiologistProfileUpsertWithoutHospitalsInput = {
+  update: Prisma.XOR<Prisma.AnesthesiologistProfileUpdateWithoutHospitalsInput, Prisma.AnesthesiologistProfileUncheckedUpdateWithoutHospitalsInput>
+  create: Prisma.XOR<Prisma.AnesthesiologistProfileCreateWithoutHospitalsInput, Prisma.AnesthesiologistProfileUncheckedCreateWithoutHospitalsInput>
+  where?: Prisma.AnesthesiologistProfileWhereInput
+}
+
+export type AnesthesiologistProfileUpdateToOneWithWhereWithoutHospitalsInput = {
+  where?: Prisma.AnesthesiologistProfileWhereInput
+  data: Prisma.XOR<Prisma.AnesthesiologistProfileUpdateWithoutHospitalsInput, Prisma.AnesthesiologistProfileUncheckedUpdateWithoutHospitalsInput>
+}
+
+export type AnesthesiologistProfileUpdateWithoutHospitalsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  crmState?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  isCrmVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reviewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  crmVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutAnesthesiologistProfileNestedInput
+  specialties?: Prisma.AnesthesiologistSpecialtyUpdateManyWithoutAnesthesiologistNestedInput
+  availability?: Prisma.AvailabilityUpdateOneWithoutAnesthesiologistNestedInput
+  connections?: Prisma.ConnectionUpdateManyWithoutAnesthesiologistNestedInput
+}
+
+export type AnesthesiologistProfileUncheckedUpdateWithoutHospitalsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  crmState?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  isCrmVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reviewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  crmVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  specialties?: Prisma.AnesthesiologistSpecialtyUncheckedUpdateManyWithoutAnesthesiologistNestedInput
+  availability?: Prisma.AvailabilityUncheckedUpdateOneWithoutAnesthesiologistNestedInput
+  connections?: Prisma.ConnectionUncheckedUpdateManyWithoutAnesthesiologistNestedInput
+}
+
+export type AnesthesiologistProfileCreateWithoutAvailabilityInput = {
+  id?: string
+  fullName: string
+  crm: string
+  crmState: string
+  bio?: string | null
+  avatarUrl?: string | null
+  plan?: $Enums.Plan
+  isCrmVerified?: boolean
+  avgRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  reviewCount?: number
+  crmVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutAnesthesiologistProfileInput
+  hospitals?: Prisma.AnesthesiologistHospitalCreateNestedManyWithoutAnesthesiologistInput
+  specialties?: Prisma.AnesthesiologistSpecialtyCreateNestedManyWithoutAnesthesiologistInput
+  connections?: Prisma.ConnectionCreateNestedManyWithoutAnesthesiologistInput
+}
+
+export type AnesthesiologistProfileUncheckedCreateWithoutAvailabilityInput = {
+  id?: string
+  userId: string
+  fullName: string
+  crm: string
+  crmState: string
+  bio?: string | null
+  avatarUrl?: string | null
+  plan?: $Enums.Plan
+  isCrmVerified?: boolean
+  avgRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  reviewCount?: number
+  crmVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  hospitals?: Prisma.AnesthesiologistHospitalUncheckedCreateNestedManyWithoutAnesthesiologistInput
+  specialties?: Prisma.AnesthesiologistSpecialtyUncheckedCreateNestedManyWithoutAnesthesiologistInput
+  connections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutAnesthesiologistInput
+}
+
+export type AnesthesiologistProfileCreateOrConnectWithoutAvailabilityInput = {
+  where: Prisma.AnesthesiologistProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.AnesthesiologistProfileCreateWithoutAvailabilityInput, Prisma.AnesthesiologistProfileUncheckedCreateWithoutAvailabilityInput>
+}
+
+export type AnesthesiologistProfileUpsertWithoutAvailabilityInput = {
+  update: Prisma.XOR<Prisma.AnesthesiologistProfileUpdateWithoutAvailabilityInput, Prisma.AnesthesiologistProfileUncheckedUpdateWithoutAvailabilityInput>
+  create: Prisma.XOR<Prisma.AnesthesiologistProfileCreateWithoutAvailabilityInput, Prisma.AnesthesiologistProfileUncheckedCreateWithoutAvailabilityInput>
+  where?: Prisma.AnesthesiologistProfileWhereInput
+}
+
+export type AnesthesiologistProfileUpdateToOneWithWhereWithoutAvailabilityInput = {
+  where?: Prisma.AnesthesiologistProfileWhereInput
+  data: Prisma.XOR<Prisma.AnesthesiologistProfileUpdateWithoutAvailabilityInput, Prisma.AnesthesiologistProfileUncheckedUpdateWithoutAvailabilityInput>
+}
+
+export type AnesthesiologistProfileUpdateWithoutAvailabilityInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  crmState?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  isCrmVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reviewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  crmVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutAnesthesiologistProfileNestedInput
+  hospitals?: Prisma.AnesthesiologistHospitalUpdateManyWithoutAnesthesiologistNestedInput
+  specialties?: Prisma.AnesthesiologistSpecialtyUpdateManyWithoutAnesthesiologistNestedInput
+  connections?: Prisma.ConnectionUpdateManyWithoutAnesthesiologistNestedInput
+}
+
+export type AnesthesiologistProfileUncheckedUpdateWithoutAvailabilityInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  crmState?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  isCrmVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reviewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  crmVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hospitals?: Prisma.AnesthesiologistHospitalUncheckedUpdateManyWithoutAnesthesiologistNestedInput
+  specialties?: Prisma.AnesthesiologistSpecialtyUncheckedUpdateManyWithoutAnesthesiologistNestedInput
+  connections?: Prisma.ConnectionUncheckedUpdateManyWithoutAnesthesiologistNestedInput
+}
+
+export type AnesthesiologistProfileCreateWithoutConnectionsInput = {
+  id?: string
+  fullName: string
+  crm: string
+  crmState: string
+  bio?: string | null
+  avatarUrl?: string | null
+  plan?: $Enums.Plan
+  isCrmVerified?: boolean
+  avgRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  reviewCount?: number
+  crmVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutAnesthesiologistProfileInput
+  hospitals?: Prisma.AnesthesiologistHospitalCreateNestedManyWithoutAnesthesiologistInput
+  specialties?: Prisma.AnesthesiologistSpecialtyCreateNestedManyWithoutAnesthesiologistInput
+  availability?: Prisma.AvailabilityCreateNestedOneWithoutAnesthesiologistInput
+}
+
+export type AnesthesiologistProfileUncheckedCreateWithoutConnectionsInput = {
+  id?: string
+  userId: string
+  fullName: string
+  crm: string
+  crmState: string
+  bio?: string | null
+  avatarUrl?: string | null
+  plan?: $Enums.Plan
+  isCrmVerified?: boolean
+  avgRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  reviewCount?: number
+  crmVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  hospitals?: Prisma.AnesthesiologistHospitalUncheckedCreateNestedManyWithoutAnesthesiologistInput
+  specialties?: Prisma.AnesthesiologistSpecialtyUncheckedCreateNestedManyWithoutAnesthesiologistInput
+  availability?: Prisma.AvailabilityUncheckedCreateNestedOneWithoutAnesthesiologistInput
+}
+
+export type AnesthesiologistProfileCreateOrConnectWithoutConnectionsInput = {
+  where: Prisma.AnesthesiologistProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.AnesthesiologistProfileCreateWithoutConnectionsInput, Prisma.AnesthesiologistProfileUncheckedCreateWithoutConnectionsInput>
+}
+
+export type AnesthesiologistProfileUpsertWithoutConnectionsInput = {
+  update: Prisma.XOR<Prisma.AnesthesiologistProfileUpdateWithoutConnectionsInput, Prisma.AnesthesiologistProfileUncheckedUpdateWithoutConnectionsInput>
+  create: Prisma.XOR<Prisma.AnesthesiologistProfileCreateWithoutConnectionsInput, Prisma.AnesthesiologistProfileUncheckedCreateWithoutConnectionsInput>
+  where?: Prisma.AnesthesiologistProfileWhereInput
+}
+
+export type AnesthesiologistProfileUpdateToOneWithWhereWithoutConnectionsInput = {
+  where?: Prisma.AnesthesiologistProfileWhereInput
+  data: Prisma.XOR<Prisma.AnesthesiologistProfileUpdateWithoutConnectionsInput, Prisma.AnesthesiologistProfileUncheckedUpdateWithoutConnectionsInput>
+}
+
+export type AnesthesiologistProfileUpdateWithoutConnectionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  crmState?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  isCrmVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reviewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  crmVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutAnesthesiologistProfileNestedInput
+  hospitals?: Prisma.AnesthesiologistHospitalUpdateManyWithoutAnesthesiologistNestedInput
+  specialties?: Prisma.AnesthesiologistSpecialtyUpdateManyWithoutAnesthesiologistNestedInput
+  availability?: Prisma.AvailabilityUpdateOneWithoutAnesthesiologistNestedInput
+}
+
+export type AnesthesiologistProfileUncheckedUpdateWithoutConnectionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  crmState?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  isCrmVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reviewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  crmVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hospitals?: Prisma.AnesthesiologistHospitalUncheckedUpdateManyWithoutAnesthesiologistNestedInput
+  specialties?: Prisma.AnesthesiologistSpecialtyUncheckedUpdateManyWithoutAnesthesiologistNestedInput
+  availability?: Prisma.AvailabilityUncheckedUpdateOneWithoutAnesthesiologistNestedInput
+}
+
+
+/**
+ * Count Type AnesthesiologistProfileCountOutputType
+ */
+
+export type AnesthesiologistProfileCountOutputType = {
+  hospitals: number
+  specialties: number
+  connections: number
+}
+
+export type AnesthesiologistProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  hospitals?: boolean | AnesthesiologistProfileCountOutputTypeCountHospitalsArgs
+  specialties?: boolean | AnesthesiologistProfileCountOutputTypeCountSpecialtiesArgs
+  connections?: boolean | AnesthesiologistProfileCountOutputTypeCountConnectionsArgs
+}
+
+/**
+ * AnesthesiologistProfileCountOutputType without action
+ */
+export type AnesthesiologistProfileCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AnesthesiologistProfileCountOutputType
+   */
+  select?: Prisma.AnesthesiologistProfileCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * AnesthesiologistProfileCountOutputType without action
+ */
+export type AnesthesiologistProfileCountOutputTypeCountHospitalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AnesthesiologistHospitalWhereInput
+}
+
+/**
+ * AnesthesiologistProfileCountOutputType without action
+ */
+export type AnesthesiologistProfileCountOutputTypeCountSpecialtiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AnesthesiologistSpecialtyWhereInput
+}
+
+/**
+ * AnesthesiologistProfileCountOutputType without action
+ */
+export type AnesthesiologistProfileCountOutputTypeCountConnectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ConnectionWhereInput
+}
 
 
 export type AnesthesiologistProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -710,6 +1246,11 @@ export type AnesthesiologistProfileSelect<ExtArgs extends runtime.Types.Extensio
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  hospitals?: boolean | Prisma.AnesthesiologistProfile$hospitalsArgs<ExtArgs>
+  specialties?: boolean | Prisma.AnesthesiologistProfile$specialtiesArgs<ExtArgs>
+  availability?: boolean | Prisma.AnesthesiologistProfile$availabilityArgs<ExtArgs>
+  connections?: boolean | Prisma.AnesthesiologistProfile$connectionsArgs<ExtArgs>
+  _count?: boolean | Prisma.AnesthesiologistProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["anesthesiologistProfile"]>
 
 export type AnesthesiologistProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -768,6 +1309,11 @@ export type AnesthesiologistProfileSelectScalar = {
 export type AnesthesiologistProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "fullName" | "crm" | "crmState" | "bio" | "avatarUrl" | "plan" | "isCrmVerified" | "avgRating" | "reviewCount" | "crmVerifiedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["anesthesiologistProfile"]>
 export type AnesthesiologistProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  hospitals?: boolean | Prisma.AnesthesiologistProfile$hospitalsArgs<ExtArgs>
+  specialties?: boolean | Prisma.AnesthesiologistProfile$specialtiesArgs<ExtArgs>
+  availability?: boolean | Prisma.AnesthesiologistProfile$availabilityArgs<ExtArgs>
+  connections?: boolean | Prisma.AnesthesiologistProfile$connectionsArgs<ExtArgs>
+  _count?: boolean | Prisma.AnesthesiologistProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AnesthesiologistProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -780,6 +1326,10 @@ export type $AnesthesiologistProfilePayload<ExtArgs extends runtime.Types.Extens
   name: "AnesthesiologistProfile"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    hospitals: Prisma.$AnesthesiologistHospitalPayload<ExtArgs>[]
+    specialties: Prisma.$AnesthesiologistSpecialtyPayload<ExtArgs>[]
+    availability: Prisma.$AvailabilityPayload<ExtArgs> | null
+    connections: Prisma.$ConnectionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1191,6 +1741,10 @@ readonly fields: AnesthesiologistProfileFieldRefs;
 export interface Prisma__AnesthesiologistProfileClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  hospitals<T extends Prisma.AnesthesiologistProfile$hospitalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AnesthesiologistProfile$hospitalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AnesthesiologistHospitalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  specialties<T extends Prisma.AnesthesiologistProfile$specialtiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AnesthesiologistProfile$specialtiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AnesthesiologistSpecialtyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  availability<T extends Prisma.AnesthesiologistProfile$availabilityArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AnesthesiologistProfile$availabilityArgs<ExtArgs>>): Prisma.Prisma__AvailabilityClient<runtime.Types.Result.GetResult<Prisma.$AvailabilityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  connections<T extends Prisma.AnesthesiologistProfile$connectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AnesthesiologistProfile$connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1632,6 +2186,97 @@ export type AnesthesiologistProfileDeleteManyArgs<ExtArgs extends runtime.Types.
    * Limit how many AnesthesiologistProfiles to delete.
    */
   limit?: number
+}
+
+/**
+ * AnesthesiologistProfile.hospitals
+ */
+export type AnesthesiologistProfile$hospitalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AnesthesiologistHospital
+   */
+  select?: Prisma.AnesthesiologistHospitalSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AnesthesiologistHospital
+   */
+  omit?: Prisma.AnesthesiologistHospitalOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AnesthesiologistHospitalInclude<ExtArgs> | null
+  where?: Prisma.AnesthesiologistHospitalWhereInput
+  orderBy?: Prisma.AnesthesiologistHospitalOrderByWithRelationInput | Prisma.AnesthesiologistHospitalOrderByWithRelationInput[]
+  cursor?: Prisma.AnesthesiologistHospitalWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AnesthesiologistHospitalScalarFieldEnum | Prisma.AnesthesiologistHospitalScalarFieldEnum[]
+}
+
+/**
+ * AnesthesiologistProfile.specialties
+ */
+export type AnesthesiologistProfile$specialtiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AnesthesiologistSpecialty
+   */
+  select?: Prisma.AnesthesiologistSpecialtySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AnesthesiologistSpecialty
+   */
+  omit?: Prisma.AnesthesiologistSpecialtyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AnesthesiologistSpecialtyInclude<ExtArgs> | null
+  where?: Prisma.AnesthesiologistSpecialtyWhereInput
+  orderBy?: Prisma.AnesthesiologistSpecialtyOrderByWithRelationInput | Prisma.AnesthesiologistSpecialtyOrderByWithRelationInput[]
+  cursor?: Prisma.AnesthesiologistSpecialtyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AnesthesiologistSpecialtyScalarFieldEnum | Prisma.AnesthesiologistSpecialtyScalarFieldEnum[]
+}
+
+/**
+ * AnesthesiologistProfile.availability
+ */
+export type AnesthesiologistProfile$availabilityArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Availability
+   */
+  select?: Prisma.AvailabilitySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Availability
+   */
+  omit?: Prisma.AvailabilityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AvailabilityInclude<ExtArgs> | null
+  where?: Prisma.AvailabilityWhereInput
+}
+
+/**
+ * AnesthesiologistProfile.connections
+ */
+export type AnesthesiologistProfile$connectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Connection
+   */
+  select?: Prisma.ConnectionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Connection
+   */
+  omit?: Prisma.ConnectionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConnectionInclude<ExtArgs> | null
+  where?: Prisma.ConnectionWhereInput
+  orderBy?: Prisma.ConnectionOrderByWithRelationInput | Prisma.ConnectionOrderByWithRelationInput[]
+  cursor?: Prisma.ConnectionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ConnectionScalarFieldEnum | Prisma.ConnectionScalarFieldEnum[]
 }
 
 /**

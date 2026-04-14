@@ -9,6 +9,11 @@ import {
   listAnesthesiologistsController,
   getAnesthesiologistByIdController,
 } from './anesthesiologists.controller'
+import { uploadAvatar, handleUploadError } from '../../shared/middlewares/upload.middleware'
+import {
+  uploadAvatarController,
+  deleteAvatarController,
+} from './anesthesiologists.avatar.controller'
 
 const router = Router()
 
@@ -22,6 +27,14 @@ router.post(
   createProfileController
 )
 
+router.post(
+  '/avatar',
+  requireRole('ANESTHESIOLOGIST'),
+  uploadAvatar,
+  handleUploadError,
+  uploadAvatarController
+)
+
 router.get(
   '/profile',
   requireRole('ANESTHESIOLOGIST'),
@@ -33,6 +46,12 @@ router.patch(
   requireRole('ANESTHESIOLOGIST'),
   validate(updateAnesthesiologistProfileSchema),
   updateProfileController
+)
+
+router.delete(
+  '/avatar',
+  requireRole('ANESTHESIOLOGIST'),
+  deleteAvatarController
 )
 
 // qualquer usuário autenticado pode listar e ver perfis

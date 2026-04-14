@@ -12,16 +12,14 @@
 
 import * as process from 'node:process'
 import * as path from 'node:path'
-import { fileURLToPath } from 'node:url'
-globalThis['__dirname'] = path.dirname(fileURLToPath(import.meta.url))
 
 import * as runtime from "@prisma/client/runtime/client"
-import * as $Enums from "./enums.ts"
-import * as $Class from "./internal/class.ts"
-import * as Prisma from "./internal/prismaNamespace.ts"
+import * as $Enums from "./enums"
+import * as $Class from "./internal/class"
+import * as Prisma from "./internal/prismaNamespace"
 
-export * as $Enums from './enums.ts'
-export * from "./enums.ts"
+export * as $Enums from './enums'
+export * from "./enums"
 /**
  * ## Prisma Client
  * 
@@ -66,3 +64,58 @@ export type SurgeonProfile = Prisma.SurgeonProfileModel
  * 
  */
 export type AnesthesiologistProfile = Prisma.AnesthesiologistProfileModel
+/**
+ * Model Specialty
+ * 
+ */
+export type Specialty = Prisma.SpecialtyModel
+/**
+ * Model AnesthesiologistSpecialty
+ * 
+ */
+export type AnesthesiologistSpecialty = Prisma.AnesthesiologistSpecialtyModel
+/**
+ * Model Hospital
+ * 
+ */
+export type Hospital = Prisma.HospitalModel
+/**
+ * Model AnesthesiologistHospital
+ * 
+ */
+export type AnesthesiologistHospital = Prisma.AnesthesiologistHospitalModel
+/**
+ * Model SurgeonHospital
+ * 
+ */
+export type SurgeonHospital = Prisma.SurgeonHospitalModel
+/**
+ * Model Availability
+ * 
+ */
+export type Availability = Prisma.AvailabilityModel
+/**
+ * Model Connection
+ * 
+ */
+export type Connection = Prisma.ConnectionModel
+/**
+ * Model Review
+ * 
+ */
+export type Review = Prisma.ReviewModel
+/**
+ * Model Achievement
+ * 
+ */
+export type Achievement = Prisma.AchievementModel
+/**
+ * Model UserAchievement
+ * 
+ */
+export type UserAchievement = Prisma.UserAchievementModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel

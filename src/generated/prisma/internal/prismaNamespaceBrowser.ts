@@ -17,8 +17,8 @@
 
 import * as runtime from "@prisma/client/runtime/index-browser"
 
-export type * from '../models.ts'
-export type * from './prismaNamespace.ts'
+export type * from '../models'
+export type * from './prismaNamespace'
 
 export const Decimal = runtime.Decimal
 
@@ -55,7 +55,18 @@ export const ModelName = {
   RefreshToken: 'RefreshToken',
   VerificationCode: 'VerificationCode',
   SurgeonProfile: 'SurgeonProfile',
-  AnesthesiologistProfile: 'AnesthesiologistProfile'
+  AnesthesiologistProfile: 'AnesthesiologistProfile',
+  Specialty: 'Specialty',
+  AnesthesiologistSpecialty: 'AnesthesiologistSpecialty',
+  Hospital: 'Hospital',
+  AnesthesiologistHospital: 'AnesthesiologistHospital',
+  SurgeonHospital: 'SurgeonHospital',
+  Availability: 'Availability',
+  Connection: 'Connection',
+  Review: 'Review',
+  Achievement: 'Achievement',
+  UserAchievement: 'UserAchievement',
+  Notification: 'Notification'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -151,12 +162,137 @@ export const AnesthesiologistProfileScalarFieldEnum = {
 export type AnesthesiologistProfileScalarFieldEnum = (typeof AnesthesiologistProfileScalarFieldEnum)[keyof typeof AnesthesiologistProfileScalarFieldEnum]
 
 
+export const SpecialtyScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt'
+} as const
+
+export type SpecialtyScalarFieldEnum = (typeof SpecialtyScalarFieldEnum)[keyof typeof SpecialtyScalarFieldEnum]
+
+
+export const AnesthesiologistSpecialtyScalarFieldEnum = {
+  anesthesiologistId: 'anesthesiologistId',
+  specialtyId: 'specialtyId'
+} as const
+
+export type AnesthesiologistSpecialtyScalarFieldEnum = (typeof AnesthesiologistSpecialtyScalarFieldEnum)[keyof typeof AnesthesiologistSpecialtyScalarFieldEnum]
+
+
+export const HospitalScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  city: 'city',
+  state: 'state',
+  createdAt: 'createdAt'
+} as const
+
+export type HospitalScalarFieldEnum = (typeof HospitalScalarFieldEnum)[keyof typeof HospitalScalarFieldEnum]
+
+
+export const AnesthesiologistHospitalScalarFieldEnum = {
+  anesthesiologistId: 'anesthesiologistId',
+  hospitalId: 'hospitalId'
+} as const
+
+export type AnesthesiologistHospitalScalarFieldEnum = (typeof AnesthesiologistHospitalScalarFieldEnum)[keyof typeof AnesthesiologistHospitalScalarFieldEnum]
+
+
+export const SurgeonHospitalScalarFieldEnum = {
+  surgeonId: 'surgeonId',
+  hospitalId: 'hospitalId'
+} as const
+
+export type SurgeonHospitalScalarFieldEnum = (typeof SurgeonHospitalScalarFieldEnum)[keyof typeof SurgeonHospitalScalarFieldEnum]
+
+
+export const AvailabilityScalarFieldEnum = {
+  id: 'id',
+  anesthesiologistId: 'anesthesiologistId',
+  status: 'status',
+  unavailableUntil: 'unavailableUntil',
+  notes: 'notes',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AvailabilityScalarFieldEnum = (typeof AvailabilityScalarFieldEnum)[keyof typeof AvailabilityScalarFieldEnum]
+
+
+export const ConnectionScalarFieldEnum = {
+  id: 'id',
+  surgeonId: 'surgeonId',
+  anesthesiologistId: 'anesthesiologistId',
+  status: 'status',
+  message: 'message',
+  respondedAt: 'respondedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ConnectionScalarFieldEnum = (typeof ConnectionScalarFieldEnum)[keyof typeof ConnectionScalarFieldEnum]
+
+
+export const ReviewScalarFieldEnum = {
+  id: 'id',
+  connectionId: 'connectionId',
+  rating: 'rating',
+  comment: 'comment',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
+
+
+export const AchievementScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  name: 'name',
+  description: 'description',
+  iconUrl: 'iconUrl',
+  createdAt: 'createdAt'
+} as const
+
+export type AchievementScalarFieldEnum = (typeof AchievementScalarFieldEnum)[keyof typeof AchievementScalarFieldEnum]
+
+
+export const UserAchievementScalarFieldEnum = {
+  userId: 'userId',
+  achievementId: 'achievementId',
+  earnedAt: 'earnedAt'
+} as const
+
+export type UserAchievementScalarFieldEnum = (typeof UserAchievementScalarFieldEnum)[keyof typeof UserAchievementScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  body: 'body',
+  isRead: 'isRead',
+  data: 'data',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -173,4 +309,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

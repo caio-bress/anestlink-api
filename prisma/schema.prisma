@@ -1,6 +1,5 @@
 // AnestLink — schema.prisma
-// Fase 1: Usuários, perfis e autenticação
-// Prisma ORM + PostgreSQL
+// Fase 1 + Fase 2
 
 generator client {
   provider = "prisma-client"
@@ -16,8 +15,8 @@ datasource db {
 // ─────────────────────────────────────────
 
 enum Role {
-  SURGEON           // cirurgião
-  ANESTHESIOLOGIST  // anestesista
+  SURGEON
+  ANESTHESIOLOGIST
   ADMIN
 }
 
@@ -32,41 +31,55 @@ enum VerificationCodeType {
   PHONE_VERIFICATION
 }
 
+enum ConnectionStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  CANCELLED
+}
+
+enum AvailabilityStatus {
+  AVAILABLE
+  BUSY
+  VACATION
+}
+
 // ─────────────────────────────────────────
-// USERS — tabela central de autenticação
+// USERS
 // ─────────────────────────────────────────
 
 model User {
-  id                String    @id @default(uuid()) @db.Uuid
-  email             String    @unique @db.VarChar(255)
-  phone             String?   @db.VarChar(20)
-  passwordHash      String    @db.VarChar(255)        @map("password_hash")
-  role              Role
-  isActive          Boolean   @default(true)          @map("is_active")
-  emailVerifiedAt   DateTime? @map("email_verified_at")
-  createdAt         DateTime  @default(now())         @map("created_at")
-  updatedAt         DateTime  @updatedAt               @map("updated_at")
+  id              String    @id @default(uuid()) @db.Uuid
+  email           String    @unique @db.VarChar(255)
+  phone           String?   @db.VarChar(20)
+  passwordHash    String    @db.VarChar(255)    @map("password_hash")
+  role            Role
+  isActive        Boolean   @default(true)      @map("is_active")
+  emailVerifiedAt DateTime? @map("email_verified_at")
+  createdAt       DateTime  @default(now())     @map("created_at")
+  updatedAt       DateTime  @updatedAt           @map("updated_at")
 
-  // relações
   surgeonProfile          SurgeonProfile?
   anesthesiologistProfile AnesthesiologistProfile?
   refreshTokens           RefreshToken[]
   verificationCodes       VerificationCode[]
+  achievements            UserAchievement[]
+  notifications           Notification[]
 
   @@map("users")
 }
 
 // ─────────────────────────────────────────
-// REFRESH TOKENS — sessões persistentes
+// REFRESH TOKENS
 // ─────────────────────────────────────────
 
 model RefreshToken {
-  id         String    @id @default(uuid()) @db.Uuid
-  userId     String    @db.Uuid             @map("user_id")
-  tokenHash  String    @unique @db.VarChar(255) @map("token_hash")
-  expiresAt  DateTime  @map("expires_at")
-  revokedAt  DateTime? @map("revoked_at")
-  createdAt  DateTime  @default(now())      @map("created_at")
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String    @db.Uuid             @map("user_id")
+  tokenHash String    @unique @db.VarChar(255) @map("token_hash")
+  expiresAt DateTime  @map("expires_at")
+  revokedAt DateTime? @map("revoked_at")
+  createdAt DateTime  @default(now())      @map("created_at")
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -76,7 +89,7 @@ model RefreshToken {
 }
 
 // ─────────────────────────────────────────
-// VERIFICATION CODES — e-mail, senha, SMS
+// VERIFICATION CODES
 // ─────────────────────────────────────────
 
 model VerificationCode {
@@ -100,19 +113,21 @@ model VerificationCode {
 // ─────────────────────────────────────────
 
 model SurgeonProfile {
-  id             String    @id @default(uuid()) @db.Uuid
-  userId         String    @unique @db.Uuid   @map("user_id")
-  fullName       String    @db.VarChar(255)   @map("full_name")
-  crm            String    @db.VarChar(20)
-  crmState       String    @db.Char(2)        @map("crm_state")
-  bio            String?   @db.Text
-  avatarUrl      String?   @db.VarChar(500)   @map("avatar_url")
-  isCrmVerified  Boolean   @default(false)    @map("is_crm_verified")
-  crmVerifiedAt  DateTime? @map("crm_verified_at")
-  createdAt      DateTime  @default(now())    @map("created_at")
-  updatedAt      DateTime  @updatedAt          @map("updated_at")
+  id            String    @id @default(uuid()) @db.Uuid
+  userId        String    @unique @db.Uuid   @map("user_id")
+  fullName      String    @db.VarChar(255)   @map("full_name")
+  crm           String    @db.VarChar(20)
+  crmState      String    @db.Char(2)        @map("crm_state")
+  bio           String?   @db.Text
+  avatarUrl     String?   @db.VarChar(500)   @map("avatar_url")
+  isCrmVerified Boolean   @default(false)    @map("is_crm_verified")
+  crmVerifiedAt DateTime? @map("crm_verified_at")
+  createdAt     DateTime  @default(now())    @map("created_at")
+  updatedAt     DateTime  @updatedAt          @map("updated_at")
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  hospitals   SurgeonHospital[]
+  connections Connection[]
 
   @@index([crm, crmState])
   @@map("surgeon_profiles")
@@ -123,25 +138,202 @@ model SurgeonProfile {
 // ─────────────────────────────────────────
 
 model AnesthesiologistProfile {
-  id             String    @id @default(uuid()) @db.Uuid
-  userId         String    @unique @db.Uuid   @map("user_id")
-  fullName       String    @db.VarChar(255)   @map("full_name")
-  crm            String    @db.VarChar(20)
-  crmState       String    @db.Char(2)        @map("crm_state")
-  bio            String?   @db.Text
-  avatarUrl      String?   @db.VarChar(500)   @map("avatar_url")
-  plan           Plan      @default(FREE)
-  isCrmVerified  Boolean   @default(false)    @map("is_crm_verified")
-  avgRating      Decimal   @default(0)        @map("avg_rating") @db.Decimal(3, 2)
-  reviewCount    Int       @default(0)        @map("review_count")
-  crmVerifiedAt  DateTime? @map("crm_verified_at")
-  createdAt      DateTime  @default(now())    @map("created_at")
-  updatedAt      DateTime  @updatedAt          @map("updated_at")
+  id            String             @id @default(uuid()) @db.Uuid
+  userId        String             @unique @db.Uuid   @map("user_id")
+  fullName      String             @db.VarChar(255)   @map("full_name")
+  crm           String             @db.VarChar(20)
+  crmState      String             @db.Char(2)        @map("crm_state")
+  bio           String?            @db.Text
+  avatarUrl     String?            @db.VarChar(500)   @map("avatar_url")
+  plan          Plan               @default(FREE)
+  isCrmVerified Boolean            @default(false)    @map("is_crm_verified")
+  avgRating     Decimal            @default(0)        @map("avg_rating") @db.Decimal(3, 2)
+  reviewCount   Int                @default(0)        @map("review_count")
+  crmVerifiedAt DateTime?          @map("crm_verified_at")
+  createdAt     DateTime           @default(now())    @map("created_at")
+  updatedAt     DateTime           @updatedAt          @map("updated_at")
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User                       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  hospitals     AnesthesiologistHospital[]
+  specialties   AnesthesiologistSpecialty[]
+  availability  Availability?
+  connections   Connection[]
 
   @@index([plan])
   @@index([avgRating])
   @@index([crm, crmState])
   @@map("anesthesiologist_profiles")
+}
+
+// ─────────────────────────────────────────
+// SPECIALTIES
+// ─────────────────────────────────────────
+
+model Specialty {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String   @unique @db.VarChar(100)
+  description String?  @db.Text
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  anesthesiologists AnesthesiologistSpecialty[]
+
+  @@map("specialties")
+}
+
+model AnesthesiologistSpecialty {
+  anesthesiologistId String @db.Uuid @map("anesthesiologist_id")
+  specialtyId        String @db.Uuid @map("specialty_id")
+
+  anesthesiologist AnesthesiologistProfile @relation(fields: [anesthesiologistId], references: [id], onDelete: Cascade)
+  specialty        Specialty               @relation(fields: [specialtyId], references: [id], onDelete: Cascade)
+
+  @@id([anesthesiologistId, specialtyId])
+  @@map("anesthesiologist_specialties")
+}
+
+// ─────────────────────────────────────────
+// HOSPITALS
+// ─────────────────────────────────────────
+
+model Hospital {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @db.VarChar(255)
+  city      String   @db.VarChar(100)
+  state     String   @db.Char(2)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  anesthesiologists AnesthesiologistHospital[]
+  surgeons          SurgeonHospital[]
+
+  @@index([city, state])
+  @@map("hospitals")
+}
+
+model AnesthesiologistHospital {
+  anesthesiologistId String @db.Uuid @map("anesthesiologist_id")
+  hospitalId         String @db.Uuid @map("hospital_id")
+
+  anesthesiologist AnesthesiologistProfile @relation(fields: [anesthesiologistId], references: [id], onDelete: Cascade)
+  hospital         Hospital                @relation(fields: [hospitalId], references: [id], onDelete: Cascade)
+
+  @@id([anesthesiologistId, hospitalId])
+  @@map("anesthesiologist_hospitals")
+}
+
+model SurgeonHospital {
+  surgeonId  String @db.Uuid @map("surgeon_id")
+  hospitalId String @db.Uuid @map("hospital_id")
+
+  surgeon  SurgeonProfile @relation(fields: [surgeonId], references: [id], onDelete: Cascade)
+  hospital Hospital       @relation(fields: [hospitalId], references: [id], onDelete: Cascade)
+
+  @@id([surgeonId, hospitalId])
+  @@map("surgeon_hospitals")
+}
+
+// ─────────────────────────────────────────
+// AVAILABILITY
+// ─────────────────────────────────────────
+
+model Availability {
+  id                 String             @id @default(uuid()) @db.Uuid
+  anesthesiologistId String             @unique @db.Uuid @map("anesthesiologist_id")
+  status             AvailabilityStatus @default(AVAILABLE)
+  unavailableUntil   DateTime?          @map("unavailable_until")
+  notes              String?            @db.VarChar(500)
+  updatedAt          DateTime           @updatedAt @map("updated_at")
+
+  anesthesiologist AnesthesiologistProfile @relation(fields: [anesthesiologistId], references: [id], onDelete: Cascade)
+
+  @@map("availability")
+}
+
+// ─────────────────────────────────────────
+// CONNECTIONS
+// ─────────────────────────────────────────
+
+model Connection {
+  id                 String           @id @default(uuid()) @db.Uuid
+  surgeonId          String           @db.Uuid @map("surgeon_id")
+  anesthesiologistId String           @db.Uuid @map("anesthesiologist_id")
+  status             ConnectionStatus @default(PENDING)
+  message            String?          @db.VarChar(500)
+  respondedAt        DateTime?        @map("responded_at")
+  createdAt          DateTime         @default(now()) @map("created_at")
+  updatedAt          DateTime         @updatedAt @map("updated_at")
+
+  surgeon          SurgeonProfile          @relation(fields: [surgeonId], references: [id], onDelete: Cascade)
+  anesthesiologist AnesthesiologistProfile @relation(fields: [anesthesiologistId], references: [id], onDelete: Cascade)
+  review           Review?
+
+  @@unique([surgeonId, anesthesiologistId])
+  @@index([surgeonId])
+  @@index([anesthesiologistId])
+  @@index([status])
+  @@map("connections")
+}
+
+// ─────────────────────────────────────────
+// REVIEWS
+// ─────────────────────────────────────────
+
+model Review {
+  id           String   @id @default(uuid()) @db.Uuid
+  connectionId String   @unique @db.Uuid @map("connection_id")
+  rating       Int
+  comment      String?  @db.Text
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  connection Connection @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+
+  @@map("reviews")
+}
+
+// ─────────────────────────────────────────
+// ACHIEVEMENTS
+// ─────────────────────────────────────────
+
+model Achievement {
+  id          String   @id @default(uuid()) @db.Uuid
+  key         String   @unique @db.VarChar(50)
+  name        String   @db.VarChar(100)
+  description String   @db.Text
+  iconUrl     String?  @db.VarChar(500) @map("icon_url")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  users UserAchievement[]
+
+  @@map("achievements")
+}
+
+model UserAchievement {
+  userId        String   @db.Uuid @map("user_id")
+  achievementId String   @db.Uuid @map("achievement_id")
+  earnedAt      DateTime @default(now()) @map("earned_at")
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievement Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  @@id([userId, achievementId])
+  @@map("user_achievements")
+}
+
+// ─────────────────────────────────────────
+// NOTIFICATIONS
+// ─────────────────────────────────────────
+
+model Notification {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid @map("user_id")
+  title     String   @db.VarChar(100)
+  body      String   @db.VarChar(500)
+  isRead    Boolean  @default(false) @map("is_read")
+  data      Json?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@map("notifications")
 }

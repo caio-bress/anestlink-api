@@ -12,6 +12,7 @@ import surgeonsRoutes from './modules/surgeons/surgeons.routes'
 import anesthesiologistsRoutes from './modules/anesthesiologists/anesthesiologists.routes'
 import { healthController } from './shared/middlewares/health.middleware'
 import cors from 'cors'
+import connectionsRoutes from './modules/connections/connections.routes'
 
 export const logger = pino({ level: 'info' })
 export const app = express()
@@ -65,5 +66,6 @@ app.use('/api/auth', authRoutes)
 app.use('/api/surgeons', surgeonsRoutes)
 app.use('/api/anesthesiologists', anesthesiologistsRoutes)
 app.get('/health', healthController)
+app.use('/api/connections', connectionsRoutes)
 
 app.use(errorMiddleware)

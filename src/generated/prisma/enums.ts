@@ -33,3 +33,22 @@ export const VerificationCodeType = {
 } as const
 
 export type VerificationCodeType = (typeof VerificationCodeType)[keyof typeof VerificationCodeType]
+
+
+export const ConnectionStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  DECLINED: 'DECLINED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type ConnectionStatus = (typeof ConnectionStatus)[keyof typeof ConnectionStatus]
+
+
+export const AvailabilityStatus = {
+  AVAILABLE: 'AVAILABLE',
+  BUSY: 'BUSY',
+  VACATION: 'VACATION'
+} as const
+
+export type AvailabilityStatus = (typeof AvailabilityStatus)[keyof typeof AvailabilityStatus]
