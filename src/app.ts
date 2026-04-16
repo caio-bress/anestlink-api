@@ -13,6 +13,11 @@ import anesthesiologistsRoutes from './modules/anesthesiologists/anesthesiologis
 import { healthController } from './shared/middlewares/health.middleware'
 import cors from 'cors'
 import connectionsRoutes from './modules/connections/connections.routes'
+import notificationsRoutes from './modules/notifications/notifications.routes'
+import availabilityRoutes from './modules/availability/availability.routes'
+import hospitalsRoutes from './modules/hospitals/hospitals.routes'
+import specialtiesRoutes from './modules/specialties/specialties.routes'
+
 
 export const logger = pino({ level: 'info' })
 export const app = express()
@@ -55,7 +60,7 @@ app.use('/api', apiRateLimit)
 
 app.use(express.json())
 
-// Endpoint de métricas (proteja isso em produção!)
+// Endpoint de métricas
 app.get('/metrics', async (_req, res) => {
   res.set('Content-Type', registry.contentType)
   res.end(await registry.metrics())
@@ -67,5 +72,9 @@ app.use('/api/surgeons', surgeonsRoutes)
 app.use('/api/anesthesiologists', anesthesiologistsRoutes)
 app.get('/health', healthController)
 app.use('/api/connections', connectionsRoutes)
+app.use('/api/notifications', notificationsRoutes)
+app.use('/api/availability', availabilityRoutes)
+app.use('/api/hospitals', hospitalsRoutes)
+app.use('/api/specialties', specialtiesRoutes)
 
 app.use(errorMiddleware)
